@@ -4,22 +4,28 @@ A basic HTTP server framework written in C#.
 
 ## Usage
 
-    class Program
+    using JamesWright.SimpleHttp;
+    
+    namespace ServerExample
     {
-        static void Main(string[] args)
+        class Program
         {
-            Server server = new Server();
-      
-            server.Routes.Add("/", (req, res) =>
+            static void Main(string[] args)
             {
-                res.Content = "{ message: \"Hello\" }";
-                res.ContentType = "application/json";
-                res.Send();
-            });
-      
-            server.Start(args);
+                Server server = new Server();
+
+                server.Routes.Add("/", (req, res) =>
+                {
+                    res.Content = "{ message: \"Hello\" }";
+                    res.ContentType = "application/json";
+                    res.Send();
+                });
+
+                server.Start(args);
+            }
         }
     }
+
 
 ## APIs
 
