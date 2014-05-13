@@ -62,4 +62,4 @@ Sends the response.
 * HTTPS/SSL
 * Asynchronous HTTP operations
 * Support for HTTP verbs/REST
-* Memory Management
+* Memory management
