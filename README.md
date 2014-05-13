@@ -37,7 +37,7 @@ Represents the HTTP server and the requests for which it will listen.
 The routes for each possible request, and a handler to specify its logic
 
 ##### `void Start(string[] args = null)`#####
-Initialises the server and its underlying listener. Only one argument is valid at present: the port number (8005 if not specified). This might be deprecated.
+Initialises the server and its underlying listener. Only one argument is valid at present: the port number (8005 if not specified). This might get deprecated.
 
 ### `Request` ###
 A HTTP request, and its underlying information, that is sent to the server.
