@@ -25,7 +25,7 @@ namespace JamesWright.SimpleHttp
 
             Request request;
 
-            while(GetNextRequest(out request))
+            while (GetNextRequest(out request))
             {
                 Console.WriteLine("{0}: {1}", DateTime.Now, request.Endpoint);
                 

@@ -10,7 +10,7 @@ namespace JamesWright.SimpleHttp
     {
         private HttpListenerRequest httpRequest;
 
-        public Request(HttpListenerRequest httpRequest)
+        internal Request(HttpListenerRequest httpRequest)
         {
             this.httpRequest = httpRequest;
         }
