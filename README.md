@@ -58,8 +58,8 @@ Sends the response.
 
 ## Future Considerations
 
-*Unit tests
-*HTTPS/SSL
-*Asynchronous HTTP operations
-*Support for HTTP verbs/REST
-*Memory Management
+* Unit tests
+* HTTPS/SSL
+* Asynchronous HTTP operations
+* Support for HTTP verbs/REST
+* Memory Management
