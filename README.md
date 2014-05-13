@@ -53,10 +53,10 @@ Contains the parameters sent with the HTTP request. Currently not populated.
 A response to be sent to the user.
 
 #### Public properties and methods #####
-##### `string Content{ get; set; }` ######
+##### `string Content { get; set; }` ######
 The body content to be returned to the user.
 
-##### `string ContentType`#####
+##### `string ContentType { get; set; }`#####
 The Internet media type (MIME) of the response e.g. "application/json".
 
 ##### `void Send()` #####
