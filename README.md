@@ -1,6 +1,6 @@
 # SimpleHttp
 
-A basic HTTP server written in C#.
+A basic HTTP server framework written in C#.
 
 ## Usage
 
