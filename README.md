@@ -4,22 +4,22 @@ A basic HTTP server written in C#.
 
 ## Usage
 
-      class Program
-      {
-          static void Main(string[] args)
-          {
-              Server server = new Server();
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Server server = new Server();
       
-              server.Routes.Add("/", (req, res) =>
-              {
-                  res.Content = "{ message: \"Hello\" }";
-                  res.ContentType = "application/json";
-                  res.Send();
-              });
+            server.Routes.Add("/", (req, res) =>
+            {
+                res.Content = "{ message: \"Hello\" }";
+                res.ContentType = "application/json";
+                res.Send();
+            });
       
-              server.Start(args);
-          }
-      }
+            server.Start(args);
+        }
+    }
 
 ## APIs
 
