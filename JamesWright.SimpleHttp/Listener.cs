@@ -25,7 +25,7 @@ namespace JamesWright.SimpleHttp
 
             Request request;
 
-            while (GetNextRequest(out request))
+            while (TryGetNextRequest(out request))
             {
                 Console.WriteLine("{0}: {1}", DateTime.Now, request.Endpoint);
                 
@@ -43,12 +43,12 @@ namespace JamesWright.SimpleHttp
             return true;
         }
 
-        private bool GetNextRequest(out Request request)
+        private bool TryGetNextRequest(out Request request)
         {
             try
             {
-                context = this.httpListener.GetContext();
-                HttpListenerRequest httpRequest = context.Request;
+                this.context = this.httpListener.GetContext();
+                HttpListenerRequest httpRequest = this.context.Request;
                 request = new Request(httpRequest);
                 return true;
             }
