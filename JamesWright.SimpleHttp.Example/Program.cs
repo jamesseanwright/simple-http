@@ -17,7 +17,7 @@ namespace JamesWright.SimpleHttp.Example
 
             app.Get("/version", (req, res) =>
             {
-                res.Content = "{ \"message\": \"Hello\" }";
+                res.Content = "{ \"version\": \"0.1\" }";
                 res.ContentType = "application/json";
                 res.Send();
             });
