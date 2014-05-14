@@ -16,7 +16,7 @@ namespace JamesWright.SimpleHttp
             this.httpListener = new HttpListener();
         }
 
-        public void Start(string port, Dictionary<string, Action<Request, Response>> routes)
+        public void Start(string port, RouteRepository routeRepository)
         {
             this.httpListener.Prefixes.Add(string.Format("http://localhost:{0}/", port));
             this.httpListener.Start();
@@ -28,18 +28,18 @@ namespace JamesWright.SimpleHttp
             while (TryGetNextRequest(out request))
             {
                 Console.WriteLine("{0}: {1}", DateTime.Now, request.Endpoint);
-                
-                if (!TryRespond(request, routes))
+
+                if (!TryRespond(request, routeRepository))
                     Console.WriteLine("No handler specified for endpoint {0}.", request.Endpoint);
             }
         }
 
-        private bool TryRespond(Request request, Dictionary<string, Action<Request, Response>> routes)
+        private bool TryRespond(Request request, RouteRepository routeRepository)
         {
-            if (!routes.ContainsKey(request.Endpoint))
+            if (!routeRepository.Get.ContainsKey(request.Endpoint))
                 return false;
 
-            routes[request.Endpoint](request, new Response(context.Response));
+            routeRepository.Get[request.Endpoint](request, new Response(context.Response));
             return true;
         }
 

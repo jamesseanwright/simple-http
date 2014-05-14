@@ -5,28 +5,22 @@ using System.Text;
 
 namespace JamesWright.SimpleHttp
 {
-    public class Server
+    class Server
     {
         private Listener listener;
+        public RouteRepository RouteRepository { get; private set; }
 
-        public Dictionary<string, Action<Request, Response>> Routes { get; private set; }
-
-        public Server()
+        public Server(Listener listener, RouteRepository routeRepository)
         {
-            this.listener = new Listener();
-            Routes = new Dictionary<string, Action<Request, Response>>();
+            this.listener = listener;
+            RouteRepository = routeRepository;
         }
 
-        public void Start(string[] args = null)
+        public void Start(string port)
         {
             Console.Write("SimpleHttp server 0.1\n\n");
-            string port = "8005";
-
-            if (args != null && args.Length > 0)
-                port = args[0];
-
             Console.WriteLine("Initialising server on port {0}...", port);
-            this.listener.Start(port, Routes);
+            this.listener.Start(port, RouteRepository);
         }
     }
 }

@@ -6,16 +6,23 @@ namespace JamesWright.SimpleHttp.Example
     {
         static void Main(string[] args)
         {
-            Server server = new Server();
+            App app = new App();
 
-            server.Routes.Add("/", (req, res) =>
+            app.Get("/", (req, res) =>
             {
-                res.Content = "{ message: \"Hello\" }";
+                res.Content = "{ \"message\": \"Hello\" }";
                 res.ContentType = "application/json";
                 res.Send();
             });
 
-            server.Start(args);
+            app.Get("/version", (req, res) =>
+            {
+                res.Content = "{ \"message\": \"Hello\" }";
+                res.ContentType = "application/json";
+                res.Send();
+            });
+
+            app.Start();
         }
     }
 }
