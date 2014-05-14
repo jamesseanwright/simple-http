@@ -16,7 +16,7 @@ A basic HTTP server framework written in C#.
 
                 server.Routes.Add("/", (req, res) =>
                 {
-                    res.Content = "{ message: \"Hello\" }";
+                    res.Content = "{ \"message\": \"Hello\" }";
                     res.ContentType = "application/json";
                     res.Send();
                 });
