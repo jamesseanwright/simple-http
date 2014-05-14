@@ -8,27 +8,31 @@ namespace JamesWright.SimpleHttp.Example
         {
             App app = new App();
 
-            app.Get("/content", (req, res) =>
+            app.Get("/", (req, res) =>
             {
-                res.Content = "You did a GET.";
+                res.Content = "<p>You did a GET.</p>";
+                res.ContentType = "text/html";
                 res.Send();
             });
 
-            app.Post("/content", (req, res) =>
+            app.Post("/", (req, res) =>
             {
-                res.Content = "You did a POST: " + req.Body;
+                res.Content = "<p>You did a POST: " + req.Body + "</p>";
+                res.ContentType = "text/html";
                 res.Send();
             });
 
-            app.Put("/content", (req, res) =>
+            app.Put("/", (req, res) =>
             {
-                res.Content = "You did a PUT: " + req.Body;
+                res.Content = "<p>You did a PUT: " + req.Body + "</p>";
+                res.ContentType = "text/html";
                 res.Send();
             });
 
-            app.Delete("/content", (req, res) =>
+            app.Delete("/", (req, res) =>
             {
-                res.Content = "You did a DELETE: " + req.Body;
+                res.Content = "<p>You did a DELETE: " + req.Body + "</p>";
+                res.ContentType = "text/html";
                 res.Send();
             });
 
