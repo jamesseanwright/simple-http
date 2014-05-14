@@ -44,13 +44,13 @@ Represents an application, served over HTTP, and the requests for which it will 
 Adds a handler for a HTTP Get request to the requested endpoint.
 
 ##### `void Post(string endpoint, Action<Request, Response> handler)` ######
-**Not yet implemented** Adds a handler for a HTTP Post request to the requested endpoint.
+**Not yet implemented!** Adds a handler for a HTTP Post request to the requested endpoint.
 
 ##### `void Put(string endpoint, Action<Request, Response> handler)` ######
-**Not yet implemented** Adds a handler for a HTTP Put request to the requested endpoint.
+**Not yet implemented!** Adds a handler for a HTTP Put request to the requested endpoint.
 
 ##### `void Delete(string endpoint, Action<Request, Response> handler)` ######
-**Not yet implemented** Adds a handler for a HTTP Delete request to the requested endpoint.
+**Not yet implemented!** Adds a handler for a HTTP Delete request to the requested endpoint.
 
 ##### `void Start(string portNumber = "8005")`#####
 Initialises the server and its underlying listener. Port number can be optionally specified.
