@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Listener.cs" />
+    <Compile Include="Methods.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="RouteRepository.cs" />
     <Compile Include="Server.cs" />

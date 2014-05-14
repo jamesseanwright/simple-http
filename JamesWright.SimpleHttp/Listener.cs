@@ -27,19 +27,21 @@ namespace JamesWright.SimpleHttp
 
             while (TryGetNextRequest(out request))
             {
-                Console.WriteLine("{0}: {1}", DateTime.Now, request.Endpoint);
+                Console.WriteLine("{0}: {1} {2}", DateTime.Now, request.Method, request.Endpoint);
 
                 if (!TryRespond(request, routeRepository))
-                    Console.WriteLine("No handler specified for endpoint {0}.", request.Endpoint);
+                    Console.WriteLine("HTTP 404 for {0}.", request.Endpoint);
             }
         }
 
         private bool TryRespond(Request request, RouteRepository routeRepository)
         {
-            if (!routeRepository.Get.ContainsKey(request.Endpoint))
+            Dictionary<string, Action<Request, Response>> routes = routeRepository.GetRoutes(request.Method);
+
+            if (routes == null || !routes.ContainsKey(request.Endpoint))
                 return false;
 
-            routeRepository.Get[request.Endpoint](request, new Response(context.Response));
+            routes[request.Endpoint](request, new Response(context.Response));
             return true;
         }
 

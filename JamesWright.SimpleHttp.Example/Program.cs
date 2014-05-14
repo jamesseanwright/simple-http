@@ -10,15 +10,29 @@ namespace JamesWright.SimpleHttp.Example
 
             app.Get("/", (req, res) =>
             {
-                res.Content = "{ \"message\": \"Hello\" }";
-                res.ContentType = "application/json";
+                res.Content = "<p>You did a GET.</p>";
+                res.ContentType = "text/html";
                 res.Send();
             });
 
-            app.Get("/version", (req, res) =>
+            app.Post("/", (req, res) =>
             {
-                res.Content = "{ \"version\": \"0.1\" }";
-                res.ContentType = "application/json";
+                res.Content = "<p>You did a POST: " + req.Body + "</p>";
+                res.ContentType = "text/html";
+                res.Send();
+            });
+
+            app.Put("/", (req, res) =>
+            {
+                res.Content = "<p>You did a PUT: " + req.Body + "</p>";
+                res.ContentType = "text/html";
+                res.Send();
+            });
+
+            app.Delete("/", (req, res) =>
+            {
+                res.Content = "<p>You did a DELETE: " + req.Body + "</p>";
+                res.ContentType = "text/html";
                 res.Send();
             });
 
