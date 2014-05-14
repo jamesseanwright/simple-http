@@ -20,5 +20,22 @@ namespace JamesWright.SimpleHttp
             Put = new Dictionary<string, Action<Request, Response>>();
             Delete = new Dictionary<string, Action<Request, Response>>();
         }
+
+        public Dictionary<string, Action<Request, Response>> GetRoutes(string method)
+        {
+            switch (method)
+            {
+                case Methods.Get:
+                    return Get;
+                case Methods.Post:
+                    return Post;
+                case Methods.Put:
+                    return Put;
+                case Methods.Delete:
+                    return Delete;
+                default:
+                    return null;
+            }
+        }
     }
 }
