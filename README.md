@@ -12,16 +12,23 @@ A basic HTTP server framework written in C#.
         {
             static void Main(string[] args)
             {
-                Server server = new Server();
-
-                server.Routes.Add("/", (req, res) =>
+                App app = new App();
+                
+                app.Get("/", (req, res) =>
                 {
-                    res.Content = "{ message: \"Hello\" }";
+                    res.Content = "{ \"message\": \"Hello\" }";
+                    res.ContentType = "application/json";
+                    res.Send();
+                });
+                
+                app.Get("/version", (req, res) =>
+                {
+                    res.Content = "{ \"message\": \"Hello\" }";
                     res.ContentType = "application/json";
                     res.Send();
                 });
 
-                server.Start(args);
+                app.Start();
             }
         }
     }
@@ -29,15 +36,24 @@ A basic HTTP server framework written in C#.
 
 ## APIs
 
-### `Server` ###
-Represents the HTTP server and the requests for which it will listen.
+### `App` ###
+Represents an application, served over HTTP, and the requests for which it will listen.
 
 #### Public properties and methods #####
-##### `Dictionary<string, Action<Request, Response>> Routes` ######
-The routes for each possible request, and a handler to specify its logic
+##### `void Get(string endpoint, Action<Request, Response> handler)` ######
+Adds a handler for a HTTP Get request to the requested endpoint.
 
-##### `void Start(string[] args = null)`#####
-Initialises the server and its underlying listener. Only one argument is valid at present: the port number (8005 if not specified). This might get deprecated.
+##### `void Post(string endpoint, Action<Request, Response> handler)` ######
+**Not yet implemented** Adds a handler for a HTTP Post request to the requested endpoint.
+
+##### `void Put(string endpoint, Action<Request, Response> handler)` ######
+**Not yet implemented** Adds a handler for a HTTP Put request to the requested endpoint.
+
+##### `void Delete(string endpoint, Action<Request, Response> handler)` ######
+**Not yet implemented** Adds a handler for a HTTP Delete request to the requested endpoint.
+
+##### `void Start(string portNumber = "8005")`#####
+Initialises the server and its underlying listener. Port number can be optionally specified.
 
 ### `Request` ###
 A HTTP request, and its underlying information, that is sent to the server.
@@ -67,5 +83,4 @@ Sends the response.
 * Unit tests
 * HTTPS/SSL
 * Asynchronous HTTP operations
-* Support for HTTP verbs/REST
 * Memory management

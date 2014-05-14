@@ -18,7 +18,7 @@ namespace JamesWright.SimpleHttp
 
         public void Start(string port)
         {
-            Console.Write("SimpleHttp server 0.1\n\n");
+            Console.Write("SimpleHttp server 0.2\n\n");
             Console.WriteLine("Initialising server on port {0}...", port);
             this.listener.Start(port, RouteRepository);
         }
