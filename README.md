@@ -76,6 +76,9 @@ A HTTP request, and its underlying information, that is sent to the server.
 ##### `string Endpoint { get; }` ######
 Returns the endpoint that the Request instance represents e.g. "/".
 
+##### `string Body { get; }` ######
+Returns request's body content.
+
 ##### `string[] Parameters`#####
 Contains the parameters sent with the HTTP request. Currently not populated.
 
