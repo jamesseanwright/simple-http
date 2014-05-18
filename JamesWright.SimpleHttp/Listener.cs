@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace JamesWright.SimpleHttp
 {
@@ -16,21 +18,23 @@ namespace JamesWright.SimpleHttp
             this.httpListener = new HttpListener();
         }
 
-        public void Start(string port, RouteRepository routeRepository)
+        public async Task StartAsync(string port, RouteRepository routeRepository)
         {
             this.httpListener.Prefixes.Add(string.Format("http://localhost:{0}/", port));
             this.httpListener.Start();
 
             Console.WriteLine("Listening for requests on port {0}.", port);
 
-            Request request;
+            Request request = await GetNextRequestAsync();
 
-            while (TryGetNextRequest(out request))
+            while (request != null)
             {
                 Console.WriteLine("{0}: {1} {2}", DateTime.Now, request.Method, request.Endpoint);
 
                 if (!TryRespond(request, routeRepository))
                     Console.WriteLine("HTTP 404 for {0}.", request.Endpoint);
+
+                request = await GetNextRequestAsync();
             }
         }
 
@@ -41,24 +45,35 @@ namespace JamesWright.SimpleHttp
             if (routes == null || !routes.ContainsKey(request.Endpoint))
                 return false;
 
-            routes[request.Endpoint](request, new Response(context.Response));
-            return true;
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += (s, e) =>
+                {
+                    routes[request.Endpoint](request, new Response(context.Response));
+                };
+
+            try
+            {
+                worker.RunWorkerAsync();
+                return true;
+            }
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
         }
 
-        private bool TryGetNextRequest(out Request request)
+        private async Task<Request> GetNextRequestAsync()
         {
             try
             {
-                this.context = this.httpListener.GetContext();
+                this.context = await this.httpListener.GetContextAsync();
                 HttpListenerRequest httpRequest = this.context.Request;
-                request = new Request(httpRequest);
-                return true;
+                return new Request(httpRequest);
             }
             catch (Exception)
             {
                 //TODO: output/log exception
-                request = null;
-                return false;
+                return null;
             }
         }
     }

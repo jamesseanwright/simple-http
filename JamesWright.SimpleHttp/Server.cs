@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace JamesWright.SimpleHttp
 {
@@ -16,11 +17,11 @@ namespace JamesWright.SimpleHttp
             RouteRepository = routeRepository;
         }
 
-        public void Start(string port)
+        public async Task StartAsync(string port)
         {
             Console.Write("SimpleHttp server 0.2\n\n");
             Console.WriteLine("Initialising server on port {0}...", port);
-            this.listener.Start(port, RouteRepository);
+            await this.listener.StartAsync(port, RouteRepository);
         }
     }
 }

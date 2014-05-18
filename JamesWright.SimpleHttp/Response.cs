@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace JamesWright.SimpleHttp
 {
@@ -19,14 +20,19 @@ namespace JamesWright.SimpleHttp
             this.httpListenerResponse = httpListenerResponse;
         }
 
-        public void Send()
+        public async Task SendAsync()
         {
             byte[] responseBuffer = Encoding.UTF8.GetBytes(Content);
             this.httpListenerResponse.ContentType = ContentType;
-            this.httpListenerResponse.ContentLength64 = responseBuffer.Length;
-            Stream output = this.httpListenerResponse.OutputStream;
-            output.Write(responseBuffer, 0, responseBuffer.Length);
-            output.Close();
+
+            if (this.httpListenerResponse.ContentLength64 == 0)
+                this.httpListenerResponse.ContentLength64 = responseBuffer.Length;
+
+            using (Stream output = this.httpListenerResponse.OutputStream)
+            { 
+                await output.WriteAsync(responseBuffer, 0, responseBuffer.Length);
+            }
+
             Console.WriteLine("{0}: Responded to request with {1} bytes of data.", DateTime.Now, responseBuffer.Length);
         }
     }

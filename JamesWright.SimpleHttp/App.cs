@@ -15,9 +15,9 @@ namespace JamesWright.SimpleHttp
             this.server = new Server(new Listener(), new RouteRepository());
         }
 
-        public void Start(string port = "8005")
+        public async Task StartAsync(string port = "8005")
         {
-            this.server.Start(port);
+            await this.server.StartAsync(port);
         }
 
         public void Get(string endpoint, Action<Request, Response> handler)
