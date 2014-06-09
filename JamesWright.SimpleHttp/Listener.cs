@@ -31,35 +31,26 @@ namespace JamesWright.SimpleHttp
             {
                 Console.WriteLine("{0}: {1} {2}", DateTime.Now, request.Method, request.Endpoint);
 
-                if (!TryRespond(request, routeRepository))
+                if (!await TryRespondAsync(request, routeRepository))
                     Console.WriteLine("HTTP 404 for {0}.", request.Endpoint);
 
                 request = await GetNextRequestAsync();
             }
         }
 
-        private bool TryRespond(Request request, RouteRepository routeRepository)
+        private async Task<bool> TryRespondAsync(Request request, RouteRepository routeRepository)
         {
             Dictionary<string, Action<Request, Response>> routes = routeRepository.GetRoutes(request.Method);
 
             if (routes == null || !routes.ContainsKey(request.Endpoint))
                 return false;
 
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += (s, e) =>
+            await Task.Run(() =>
                 {
                     routes[request.Endpoint](request, new Response(context.Response));
-                };
+                });
 
-            try
-            {
-                worker.RunWorkerAsync();
-                return true;
-            }
-            catch (InvalidOperationException)
-            {
-                return false;
-            }
+            return true;
         }
 
         private async Task<Request> GetNextRequestAsync()

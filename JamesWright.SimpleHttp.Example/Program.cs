@@ -26,21 +26,21 @@ namespace JamesWright.SimpleHttp.Example
 
             app.Post("/", async (req, res) =>
             {
-                res.Content = "<p>You did a POST: " + req.Body + "</p>";
+                res.Content = "<p>You did a POST: " + await req.GetBodyAsync() + "</p>";
                 res.ContentType = "text/html";
                 await res.SendAsync();
             });
 
             app.Put("/", async (req, res) =>
             {
-                res.Content = "<p>You did a PUT: " + req.Body + "</p>";
+                res.Content = "<p>You did a PUT: " + await req.GetBodyAsync() + "</p>";
                 res.ContentType = "text/html";
                 await res.SendAsync();
             });
 
             app.Delete("/", async (req, res) =>
             {
-                res.Content = "<p>You did a DELETE: " + req.Body + "</p>";
+                res.Content = "<p>You did a DELETE: " + await req.GetBodyAsync() + "</p>";
                 res.ContentType = "text/html";
                 await res.SendAsync();
             });
