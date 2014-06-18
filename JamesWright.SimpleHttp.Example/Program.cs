@@ -8,13 +8,6 @@ namespace JamesWright.SimpleHttp.Example
     {
         static void Main(string[] args)
         {
-            RunAsync();
-            AutoResetEvent keepAlive = new AutoResetEvent(false);
-            keepAlive.WaitOne();
-        }
-
-        private static async void RunAsync()
-        {
             App app = new App();
 
             app.Get("/", async (req, res) =>
@@ -45,7 +38,7 @@ namespace JamesWright.SimpleHttp.Example
                 await res.SendAsync();
             });
 
-            await app.StartAsync();
+            app.Start();
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace JamesWright.SimpleHttp
@@ -15,9 +16,11 @@ namespace JamesWright.SimpleHttp
             this.server = new Server(new Listener(), new RouteRepository());
         }
 
-        public async Task StartAsync(string port = "8005")
+        public void Start (string port = "8005")
         {
-            await this.server.StartAsync(port);
+            AutoResetEvent keepAlive = new AutoResetEvent(false);
+            this.server.StartAsync(port);
+            keepAlive.WaitOne();
         }
 
         public void Get(string endpoint, Action<Request, Response> handler)

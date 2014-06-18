@@ -34,6 +34,7 @@ namespace JamesWright.SimpleHttp
             }
 
             Console.WriteLine("{0}: Responded to request with {1} bytes of data.", DateTime.Now, responseBuffer.Length);
+            this.httpListenerResponse.Close();
         }
     }
 }
