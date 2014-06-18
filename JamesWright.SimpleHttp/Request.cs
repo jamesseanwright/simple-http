@@ -4,12 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace JamesWright.SimpleHttp
 {
     public class Request
     {
         private HttpListenerRequest httpRequest;
+        private string body;
 
         internal Request(HttpListenerRequest httpRequest)
         {
@@ -28,18 +30,24 @@ namespace JamesWright.SimpleHttp
             get { return this.httpRequest.HttpMethod; }
         }
 
-        public string Body
+        public async Task<string> GetBodyAsync()
         {
-            get
-            {
-                //TODO: handle exceptions
-                if (Method == Methods.Get || !this.httpRequest.HasEntityBody)
-                    return null;
+            //TODO: handle exceptions
+            if (Method == Methods.Get || !this.httpRequest.HasEntityBody)
+                return null;
 
+            if (this.body == null)
+            {
                 byte[] buffer = new byte[this.httpRequest.ContentLength64];
-                this.httpRequest.InputStream.Read(buffer, 0, buffer.Length);
-                return Encoding.UTF8.GetString(buffer);
+                using (Stream inputStream = this.httpRequest.InputStream)
+                {
+                    await inputStream.ReadAsync(buffer, 0, buffer.Length);
+                }
+
+                this.body = Encoding.UTF8.GetString(buffer);
             }
+
+            return this.body;
         }
     }
 }

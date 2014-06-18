@@ -1,4 +1,6 @@
 ﻿using JamesWright.SimpleHttp;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace JamesWright.SimpleHttp.Example
 {
@@ -8,32 +10,32 @@ namespace JamesWright.SimpleHttp.Example
         {
             App app = new App();
 
-            app.Get("/", (req, res) =>
+            app.Get("/", async (req, res) =>
             {
                 res.Content = "<p>You did a GET.</p>";
                 res.ContentType = "text/html";
-                res.Send();
+                await res.SendAsync();
             });
 
-            app.Post("/", (req, res) =>
+            app.Post("/", async (req, res) =>
             {
-                res.Content = "<p>You did a POST: " + req.Body + "</p>";
+                res.Content = "<p>You did a POST: " + await req.GetBodyAsync() + "</p>";
                 res.ContentType = "text/html";
-                res.Send();
+                await res.SendAsync();
             });
 
-            app.Put("/", (req, res) =>
+            app.Put("/", async (req, res) =>
             {
-                res.Content = "<p>You did a PUT: " + req.Body + "</p>";
+                res.Content = "<p>You did a PUT: " + await req.GetBodyAsync() + "</p>";
                 res.ContentType = "text/html";
-                res.Send();
+                await res.SendAsync();
             });
 
-            app.Delete("/", (req, res) =>
+            app.Delete("/", async (req, res) =>
             {
-                res.Content = "<p>You did a DELETE: " + req.Body + "</p>";
+                res.Content = "<p>You did a DELETE: " + await req.GetBodyAsync() + "</p>";
                 res.ContentType = "text/html";
-                res.Send();
+                await res.SendAsync();
             });
 
             app.Start();

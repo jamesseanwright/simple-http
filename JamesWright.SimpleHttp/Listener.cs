@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace JamesWright.SimpleHttp
 {
@@ -16,49 +18,53 @@ namespace JamesWright.SimpleHttp
             this.httpListener = new HttpListener();
         }
 
-        public void Start(string port, RouteRepository routeRepository)
+        public async Task StartAsync(string port, RouteRepository routeRepository)
         {
             this.httpListener.Prefixes.Add(string.Format("http://localhost:{0}/", port));
             this.httpListener.Start();
 
             Console.WriteLine("Listening for requests on port {0}.", port);
 
-            Request request;
+            Request request = await GetNextRequestAsync();
 
-            while (TryGetNextRequest(out request))
+            while (request != null)
             {
                 Console.WriteLine("{0}: {1} {2}", DateTime.Now, request.Method, request.Endpoint);
 
-                if (!TryRespond(request, routeRepository))
+                if (!await TryRespondAsync(request, routeRepository))
                     Console.WriteLine("HTTP 404 for {0}.", request.Endpoint);
+
+                request = await GetNextRequestAsync();
             }
         }
 
-        private bool TryRespond(Request request, RouteRepository routeRepository)
+        private async Task<bool> TryRespondAsync(Request request, RouteRepository routeRepository)
         {
             Dictionary<string, Action<Request, Response>> routes = routeRepository.GetRoutes(request.Method);
 
             if (routes == null || !routes.ContainsKey(request.Endpoint))
                 return false;
 
-            routes[request.Endpoint](request, new Response(context.Response));
+            await Task.Run(() =>
+                {
+                    routes[request.Endpoint](request, new Response(context.Response));
+                });
+
             return true;
         }
 
-        private bool TryGetNextRequest(out Request request)
+        private async Task<Request> GetNextRequestAsync()
         {
             try
             {
-                this.context = this.httpListener.GetContext();
+                this.context = await this.httpListener.GetContextAsync();
                 HttpListenerRequest httpRequest = this.context.Request;
-                request = new Request(httpRequest);
-                return true;
+                return new Request(httpRequest);
             }
             catch (Exception)
             {
                 //TODO: output/log exception
-                request = null;
-                return false;
+                return null;
             }
         }
     }
