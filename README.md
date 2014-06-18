@@ -4,10 +4,10 @@ A basic HTTP server framework written in C#.
 
 ## Usage
 
-using JamesWright.SimpleHttp;
-using System.Threading;
-using System.Threading.Tasks;
-
+    using JamesWright.SimpleHttp;
+    using System.Threading;
+    using System.Threading.Tasks;
+    
     namespace JamesWright.SimpleHttp.Example
     {
         class Program
