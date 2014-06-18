@@ -78,9 +78,6 @@ A HTTP request, and its underlying information, that is sent to the server.
 ##### `string Endpoint { get; }` ######
 Returns the endpoint that the Request instance represents e.g. "/".
 
-##### `string Body { get; }` ######
-Returns request's body content.
-
 ##### `string[] Parameters { get; }`#####
 Contains the parameters sent with the HTTP request. Currently not populated.
 
@@ -100,10 +97,11 @@ The Internet media type (MIME) of the response e.g. "application/json".
 ##### `async Task SendAsync()` #####
 Sends the response asynchronously.
 
-## Future Considerations
+## Roadmap
 
 * Request parameters
 * JSON
+* NuGet
 * HTTPS/SSL
 * Memory management
 * Unit tests
