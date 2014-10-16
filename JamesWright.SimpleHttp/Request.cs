@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -18,11 +19,31 @@ namespace JamesWright.SimpleHttp
             this.httpRequest = httpRequest;
         }
 
-        public string[] Parameters { get; private set; }
+        private Dictionary<string, string> parameters;
+        public Dictionary<string, string> Parameters
+        {
+            get
+            {
+                if (this.parameters == null)
+                {
+                    this.parameters = new Dictionary<string, string>();
+                    NameValueCollection param = this.httpRequest.QueryString;
+
+                    for (int i = 0; i < param.Count; i++)
+                    {
+                        this.parameters.Add(param.GetKey(i), param.Get(i));
+                    }
+                }
+
+                return this.parameters;
+            } 
+        }
+
+        public Dictionary<string, string> Headers { get; private set; }
 
         public string Endpoint
         {
-            get { return this.httpRequest.RawUrl; }
+            get { return this.httpRequest.Url.LocalPath; }
         }
 
         public string Method
