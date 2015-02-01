@@ -2,6 +2,9 @@
 
 A basic HTTP server framework written in C#.
 
+## License
+GNU GPL
+
 ## Usage
 
     using JamesWright.SimpleHttp;
