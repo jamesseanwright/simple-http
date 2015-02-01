@@ -3,7 +3,10 @@
 A basic HTTP server framework written in C#.
 
 ## License
-GNU GPL
+[GNU GPL](https://gnu.org/licenses/gpl.html), "giving you legal permission to copy, distribute and/or modify it."
+
+## Feature requests
+I'm not actively developing this project at present, but it is being used in an academic setting. If I can add any functionality to assist your project, feel free to get in touch. Alternatively, I'm open to pull requests.
 
 ## Usage
 
