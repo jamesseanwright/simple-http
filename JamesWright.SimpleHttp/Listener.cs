@@ -45,6 +45,7 @@ namespace JamesWright.SimpleHttp
             if (routes == null || !routes.ContainsKey(request.Endpoint))
                 return false;
 
+            // TODO: Thread pooling!
             await Task.Run(() =>
                 {
                     routes[request.Endpoint](request, new Response(context.Response));
